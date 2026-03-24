@@ -1,4 +1,4 @@
-let display = document.getElementById('display');
+const display = document.getElementById('display');
 let firstNumber = '';
 let secondNumber = '';
 let operator = '';
@@ -8,10 +8,7 @@ function add(a, b) { return a + b; }
 function subtract(a, b) { return a - b; }
 function multiply(a, b) { return a * b; }
 function divide(a, b) { 
-    if (b === 0) {
-        alert("Can't divide by 0!"); 
-        return 0;
-    }
+    if (b === 0) { alert("Can't divide by 0!"); return 0; }
     return a / b; 
 }
 
@@ -25,36 +22,43 @@ function operate(op, a, b) {
         case '/': return divide(a, b);
     }
 }
+
 document.querySelectorAll('.digit').forEach(btn => {
     btn.addEventListener('click', () => {
         if(resultDisplayed) {
             display.textContent = '';
-            resultDisplayed = false;
             firstNumber = '';
             secondNumber = '';
             operator = '';
+            resultDisplayed = false;
         }
         display.textContent += btn.textContent;
     });
 });
+
 document.querySelector('.decimal').addEventListener('click', () => {
     if(!display.textContent.includes('.')) {
         display.textContent += '.';
     }
 });
+
 document.querySelectorAll('.operator').forEach(opBtn => {
     opBtn.addEventListener('click', () => {
-        if(firstNumber && operator && display.textContent) {
+        if(!firstNumber) {
+            firstNumber = display.textContent;
+            operator = opBtn.textContent;
+            display.textContent = '';
+        } else if(firstNumber && operator && display.textContent) {
             secondNumber = display.textContent;
             firstNumber = operate(operator, firstNumber, secondNumber);
-            display.textContent = firstNumber;
+            display.textContent = '';
+            operator = opBtn.textContent;
         } else {
-            firstNumber = display.textContent;
+            operator = opBtn.textContent;
         }
-        operator = opBtn.textContent;
-        display.textContent = '';
     });
 });
+
 document.querySelector('.equals').addEventListener('click', () => {
     if(firstNumber && operator && display.textContent) {
         secondNumber = display.textContent;
@@ -65,12 +69,15 @@ document.querySelector('.equals').addEventListener('click', () => {
         operator = '';
     }
 });
+
 document.querySelector('.clear').addEventListener('click', () => {
     display.textContent = '';
     firstNumber = '';
     secondNumber = '';
     operator = '';
+    resultDisplayed = false;
 });
+
 document.querySelector('.backspace').addEventListener('click', () => {
     display.textContent = display.textContent.slice(0, -1);
 });
