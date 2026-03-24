@@ -1,10 +1,17 @@
 body {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
     font-family: Arial, sans-serif;
     background: #f0f0f0;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
 }
 
 .calculator {
@@ -21,7 +28,8 @@ body {
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 10px;
-    min-width: 200px;
+    min-width: 220px;
+    overflow-x: auto;
 }
 
 .buttons {
